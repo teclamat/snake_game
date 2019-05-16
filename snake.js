@@ -46,6 +46,19 @@ class SnakeGame{
     };
 }
 
-const snake = new SnakeGame();
 
+class walls
+{
+    constructor(){
+      this.model=document.createElement('canvas');
+      this.ctx=this.model.getContext('2d');
+      this.model.width=MODULE_SIZE;
+      this.model.height=MODULE_SIZE;
+      this.build();
+
+  }
+  build(){}
+  render(){}
+}
+const snake = new SnakeGame();
 window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snake.game));
