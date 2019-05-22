@@ -50,6 +50,18 @@ class Grid {
     }
 }
 
+class SnakeBody {
+    constructor() {
+        this.model = document.createElement("canvas");
+        this.ctx = ctx;
+        this.canvas = canvas;
+        this.bodyParts = 1;
+
+        this.fillStyle = 'rgb(244,12,45)';
+        ctx.fillRect(x, y, height, width);
+    }
+}
+
 class SnakeGame {
     constructor() {
         this.game = document.createElement('canvas');
@@ -59,11 +71,11 @@ class SnakeGame {
         this.wall = new Wall(this.game);
         this.render();
     }
-    build() { };
+    build() { }
     render() {
         this.grid.draw();
         this.wall.draw(5, 6);
-    };
+    }
 }
 
 const snake = new SnakeGame();
