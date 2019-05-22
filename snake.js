@@ -57,8 +57,6 @@ class walls
       this.build();
 
   }
-  build(){}
-  render(){}
 }
 const snake = new SnakeGame();
 window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snake.game));
