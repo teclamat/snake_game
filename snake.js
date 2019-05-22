@@ -5,11 +5,11 @@ const MODULE_SIZE = 20;
 class SnakeGame{
     constructor() {
         this.game = document.createElement('canvas');
-        this.game.width = (BOARD_X + 1) * MODULE_SIZE - 1;
-        this.game.height = (BOARD_Y + 1) * MODULE_SIZE - 1;
+        this.game.width = BOARD_X * (MODULE_SIZE + 1) - 1;
+        this.game.height = BOARD_Y * (MODULE_SIZE + 1) - 1;
     }
     build() {};
-    render() { };
+    render() {};
 }
 
 const snake = new SnakeGame();
