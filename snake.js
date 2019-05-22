@@ -2,6 +2,23 @@ const BOARD_X = 40;
 const BOARD_Y = 20;
 const MODULE_SIZE = 20;
 
+class Food {
+    constructor(size) {
+        this.model = document.createElement('canvas');
+        this.model.width = 'size';
+        this.model.height = 'size';
+        this.ctx = this.model.getContext('2d');
+        this.build();
+    }
+    build() {
+        this.ctx.fillRect(x,y,'size','size');
+        this.ctx.fillStyle = "008000";
+    }
+    render() {
+
+    }
+}
+
 class GameBoard {
     constructor(gameCanvas, color) {
         this.gameContext = gameCanvas.getContext('2d');
