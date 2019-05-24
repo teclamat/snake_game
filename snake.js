@@ -18,31 +18,36 @@ window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snak
 
 
 class GameBoard{
-    constructor() {}
+    constructor(xdim, ydim, fsize, context) {
+        this.FieldSize = fsize;
+        this.BoardWidth = xdim*(fsize+1)-1;
+        this.BoardHeight = ydim*(fsize+1)-1;
+        this.ctx = context;
+    }
     DrawLine(x, y, d){
-        const ctx = snake.game.getContext('2d');
+        const ctx = this.ctx;
         this.d = d;
         ctx.strokeStyle = 'grey';
         ctx.moveTo(x, y);
         if (d == 0) {
-            ctx.lineTo(x, snake.game.height);
+            ctx.lineTo(x, this.BoardHeight);
         } else if (d == 1) {
-            ctx.lineTo(snake.game.width, y);
+            ctx.lineTo(this.BoardWidth, y);
         }
         ctx.lineWidth = 1;
         ctx.stroke();
     }
     DrawBoard(){
-        for (var x = MODULE_SIZE, y = 0; x < snake.game.width; x += MODULE_SIZE) {
+        for (var x = this.FieldSize, y = 0; x < this.BoardWidth; x += this.FieldSize) {
             let direction = 0;
             this.DrawLine(x, y, direction);
         }
-        for (var x = 0, y = MODULE_SIZE; y < snake.game.height; y += MODULE_SIZE) {
+        for (var x = 0, y = this.FieldSize; y < this.BoardHeight; y += this.FieldSize) {
             let direction = 1;
             this.DrawLine(x, y, direction);
         }
     }
 }
 
-const board = new GameBoard();
+const board = new GameBoard(BOARD_X, BOARD_Y, MODULE_SIZE, snake.game.getContext('2d'));
 board.DrawBoard();
