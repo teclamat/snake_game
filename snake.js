@@ -18,16 +18,17 @@ window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snak
 
 
 class GameBoard{
-    constructor(xdim, ydim, fsize, context) {
+    constructor(xdim, ydim, fsize, context, color) {
         this.FieldSize = fsize;
         this.BoardWidth = xdim*(fsize+1)-1;
         this.BoardHeight = ydim*(fsize+1)-1;
         this.ctx = context;
+        this.color = color;
     }
     DrawLine(x, y, d){
         const ctx = this.ctx;
         this.d = d;
-        ctx.strokeStyle = 'grey';
+        ctx.strokeStyle = this.color;
         ctx.moveTo(x, y);
         if (d == 0) {
             ctx.lineTo(x, this.BoardHeight);
@@ -49,5 +50,5 @@ class GameBoard{
     }
 }
 
-const board = new GameBoard(BOARD_X, BOARD_Y, MODULE_SIZE, snake.game.getContext('2d'));
+const board = new GameBoard(BOARD_X, BOARD_Y, MODULE_SIZE, snake.game.getContext('2d'), 'lightgrey');
 board.DrawBoard();
