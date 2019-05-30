@@ -3,19 +3,26 @@ const BOARD_Y = 20;
 const MODULE_SIZE = 20;
 
 class Food {
-    constructor(size) {
+
+    constructor() {
         this.model = document.createElement('canvas');
-        this.model.width = 'size';
-        this.model.height = 'size';
+        this.model.width = MODULE_SIZE;
+        this.model.height = MODULE_SIZE;
         this.ctx = this.model.getContext('2d');
         this.build();
+
+this.x=Math.floor((Math.random()*800)+1);
+this.y=Math.floor((Math.random()*420)+1);
     }
     build() {
-        this.ctx.fillRect(x,y,'size','size');
-        this.ctx.fillStyle = "008000";
+        this.ctx.fillStyle = "#008000";
+        this.ctx.rotate(45 * Math.PI / 180);
+        this.ctx.fillRect(7,-7,MODULE_SIZE-6,MODULE_SIZE-6);
     }
-    render() {
 
+
+    render(ctx) {
+        ctx.drawImage(this.model, this.x, this.y);
     }
 }
 
@@ -55,11 +62,14 @@ class SnakeGame{
         this.game.width = BOARD_X * (MODULE_SIZE + 1) - 1;
         this.game.height = BOARD_Y * (MODULE_SIZE + 1) - 1;
         this.board = new GameBoard(this.game, 'lightgray');
+        this.ctx = this.game.getContext("2d");
+        this.food = new Food();
         this.render();
     }
     build() {};
     render() {
         this.board.draw();
+        this.food.render(this.ctx);
     };
 }
 
