@@ -31,8 +31,10 @@ class SnakeGame{
     }
     build() {};
     render() {
+        
         this.food.render(this.ctx);
         requestAnimationFrame(render);
+       
     };
 }
 
