@@ -2,53 +2,50 @@ const BOARD_X = 40;
 const BOARD_Y = 20;
 const MODULE_SIZE = 20;
 
+class GameBoard {
+    constructor(gameCanvas, color) {
+        this.gameContext = gameCanvas.getContext('2d');
+        this.model = gameCanvas.cloneNode();
+        this.ctx = this.model.getContext('2d');
+        this.ctx.lineWidth = 1;
+        this.ctx.strokeStyle = color;
+        this.ctx.fillStyle = 'white';
+        this.build();
+    }
+    build() {
+        this.ctx.fillRect(0, 0, this.model.width, this.model.height);
+
+        for (let x = MODULE_SIZE + 1.5; x < this.model.width; x += MODULE_SIZE + 1) {
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.model.height);
+        }
+
+        for (let y = MODULE_SIZE + 1.5; y < this.model.height; y += MODULE_SIZE + 1) {
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.model.width, y);
+        }
+
+        this.ctx.stroke();
+    }
+    draw() {
+        this.gameContext.drawImage(this.model, 0, 0);
+    }
+}
+
 class SnakeGame{
     constructor() {
         this.game = document.createElement('canvas');
         this.game.width = BOARD_X * (MODULE_SIZE + 1) - 1;
         this.game.height = BOARD_Y * (MODULE_SIZE + 1) - 1;
+        this.board = new GameBoard(this.game, 'lightgray');
+        this.render();
     }
     build() {};
-    render() {};
+    render() {
+        this.board.draw();
+    };
 }
 
 const snake = new SnakeGame();
 
 window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snake.game));
-
-
-class GameBoard{
-    constructor(xdim, ydim, fsize, context, color) {
-        this.FieldSize = fsize;
-        this.BoardWidth = xdim*(fsize+1)-1;
-        this.BoardHeight = ydim*(fsize+1)-1;
-        this.ctx = context;
-        this.color = color;
-    }
-    DrawLine(x, y, d){
-        const ctx = this.ctx;
-        this.d = d;
-        ctx.strokeStyle = this.color;
-        ctx.moveTo(x, y);
-        if (d == 0) {
-            ctx.lineTo(x, this.BoardHeight);
-        } else if (d == 1) {
-            ctx.lineTo(this.BoardWidth, y);
-        }
-        ctx.lineWidth = 1;
-        ctx.stroke();
-    }
-    DrawBoard(){
-        for (var x = this.FieldSize, y = 0; x < this.BoardWidth; x += this.FieldSize) {
-            let direction = 0;
-            this.DrawLine(x, y, direction);
-        }
-        for (var x = 0, y = this.FieldSize; y < this.BoardHeight; y += this.FieldSize) {
-            let direction = 1;
-            this.DrawLine(x, y, direction);
-        }
-    }
-}
-
-const board = new GameBoard(BOARD_X, BOARD_Y, MODULE_SIZE, snake.game.getContext('2d'), 'lightgrey');
-board.DrawBoard();
