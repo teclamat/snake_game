@@ -93,13 +93,47 @@ class SnakeGame {
         this.snakeModule = new SnakeBody(this.game);
         this.grid = new Grid(this.game, 'lightgray');
         this.wall = new Wall(this.game);
+        this.moveDir = { x: 1, y: 0 };
+        this.moveChange = null;
+        window.addEventListener('keydown', ev => this.input(ev));
         this.render();
     }
-    build() { }
     render() {
+        if (this.moveChange) {
+            this.moveDir = this.moveChange;
+            this.moveChange = null;
+        }
+        this.move();
         this.grid.draw();
         this.wall.draw(5, 6);
         this.snake.forEach(coord => this.snakeModule.draw(coord.x, coord.y));
+        setTimeout(() => this.render(), 300);
+    }
+    move() {
+        const lastElem = this.snake[this.snake.length - 1];
+        const newElem = { x: (lastElem.x + this.moveDir.x), y: (lastElem.y + this.moveDir.y) };
+        if (newElem.x >= BOARD_X) newElem.x = 0;
+        if (newElem.x < 0) newElem.x = BOARD_X - 1;
+        if (newElem.y >= BOARD_Y) newElem.y = 0;
+        if (newElem.y < 0) newElem.y = BOARD_Y - 1;
+        this.snake.shift();
+        this.snake.push(newElem);
+    }
+    input(ev) {
+        switch (ev.key) {
+            case 'ArrowUp':
+                if (this.moveDir.y == 0) this.moveChange = { x: 0, y: -1 };
+                break;
+            case 'ArrowDown':
+                if (this.moveDir.y == 0) this.moveChange = { x: 0, y: 1 };
+                break;
+            case 'ArrowLeft':
+                if (this.moveDir.x == 0) this.moveChange = { x: -1, y: 0 };
+                break;
+            case 'ArrowRight':
+                if (this.moveDir.x == 0) this.moveChange = { x: 1, y: 0 };
+                break;
+        }
     }
 }
 
