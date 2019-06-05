@@ -2,7 +2,25 @@ const BOARD_X = 40;
 const BOARD_Y = 20;
 const MODULE_SIZE = 20;
 
-class GameBoard {
+class Wall {
+    constructor(gameCanvas) {
+        this.game = gameCanvas.getContext('2d');
+        this.model = document.createElement('canvas');
+        this.ctx = this.model.getContext('2d');
+        this.model.width = MODULE_SIZE;
+        this.model.height = MODULE_SIZE;
+        this.build();
+    }
+    build() {
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(0, 0, MODULE_SIZE, MODULE_SIZE);
+    }
+    draw(x, y) {
+        this.game.drawImage(this.model, x * (MODULE_SIZE + 1), y * (MODULE_SIZE + 1));
+    }
+}
+
+class Grid {
     constructor(gameCanvas, color) {
         this.gameContext = gameCanvas.getContext('2d');
         this.model = gameCanvas.cloneNode();
@@ -37,37 +55,17 @@ class SnakeGame {
         this.game = document.createElement('canvas');
         this.game.width = BOARD_X * (MODULE_SIZE + 1) - 1;
         this.game.height = BOARD_Y * (MODULE_SIZE + 1) - 1;
-        this.board = new GameBoard(this.game, 'lightgray');
+        this.grid = new Grid(this.game, 'lightgray');
         this.wall = new Wall(this.game);
         this.render();
-
     }
     build() { };
     render() {
-        this.board.draw();
-        this.wall.draw(5,6);
+        this.grid.draw();
+        this.wall.draw(5, 6);
     };
 }
 
-class Wall {
-    constructor(gameCanvas) {
-        this.game = gameCanvas.getContext('2d');
-        this.model = document.createElement('canvas');
-        this.ctx = this.model.getContext('2d');
-        this.model.width = MODULE_SIZE;
-        this.model.height = MODULE_SIZE;
-        this.build();
-    }
-    build() {
-        this.ctx.fillStyle = "red";
-        this.ctx.fillRect(0, 0, MODULE_SIZE, MODULE_SIZE);
-    }
-    draw(x, y) {
-        this.game.drawImage(this.model, x * (MODULE_SIZE + 1), y * (MODULE_SIZE + 1));
-    }
-
-
-}
-
 const snake = new SnakeGame();
+
 window.addEventListener('DOMContentLoaded', () => document.body.appendChild(snake.game));
